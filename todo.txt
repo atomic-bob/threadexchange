@@ -1,0 +1,9 @@
+[ ] login/create account with facebook only?
+[ ] when listing my items, show edit button instead of contact
+[ ] inline editor (edit in place)
+[ ] inline editor should have a big save button and a small delete button (with confirmation)
+[ ] button for "my items" filter
+[ ] button to clear filters and search
+[ ] account contact options
+	- facebook message
+	- email
