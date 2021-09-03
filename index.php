@@ -1,3 +1,13 @@
+<html>
+<head>
+  <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+  <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+</head>
+<body>
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 $databaseDirectory = __DIR__ . "/threadexchangeDatabase";
@@ -64,21 +74,21 @@ var_dump($results);
 
 
 //get threads with user and manu data associated
-$searchQuery = "007";
-$threadsSearchWithUsersandManufacturers = $threadStore->createQueryBuilder()
-  //->where([ "desc", "=", "007 Blue" ]) // filter to blue
-  ->search(["desc"], $searchQuery)
-  ->orderBy(["searchScore" => "DESC"]) // sort result
-  ->except(["searchScore"]) // exclude field from result
-  ->join(function($thread) use ($peopleStore) { // add person data
-    return $peopleStore->findById($thread['userID']);
-  }, "user")
-    ->join(function($thread) use ($manufacturerStore) { //add manufacturer data
-    return $manufacturerStore->findById($thread['manufacturerID']);
-  }, "manufacturer")
-  ->getQuery()
-  ->fetch();
-var_dump($threadsSearchWithUsersandManufacturers);
+// $searchQuery = "007";
+// $threadsSearchWithUsersandManufacturers = $threadStore->createQueryBuilder()
+//   //->where([ "desc", "=", "007 Blue" ]) // filter to blue
+//   ->search(["desc"], $searchQuery)
+//   ->orderBy(["searchScore" => "DESC"]) // sort result
+//   ->except(["searchScore"]) // exclude field from result
+//   ->join(function($thread) use ($peopleStore) { // add person data
+//     return $peopleStore->findById($thread['userID']);
+//   }, "user")
+//     ->join(function($thread) use ($manufacturerStore) { //add manufacturer data
+//     return $manufacturerStore->findById($thread['manufacturerID']);
+//   }, "manufacturer")
+//   ->getQuery()
+//   ->fetch();
+// var_dump($threadsSearchWithUsersandManufacturers);
 
 //get threads with user and manu data associated
 $allThreadsWithUsersandManufacturers = $threadStore->createQueryBuilder()
@@ -90,4 +100,22 @@ $allThreadsWithUsersandManufacturers = $threadStore->createQueryBuilder()
   }, "manufacturer")
   ->getQuery()
   ->fetch();
-var_dump($allThreadsWithUsersandManufacturers);
+  echo '<div class="container">';
+foreach($allThreadsWithUsersandManufacturers as $t){
+  echo '
+  <div class="row">
+    <div class="col">';
+      echo $t['desc'];
+    echo '</div>
+    <div class="col">
+      ';
+      echo number_format($t['price'],2).' '.$t['currency'];
+    echo '
+    </div>
+    <div class="col">
+      <a href=#>View Contact Info</a>
+    </div>
+  </div>
+  ';
+}
+echo '</div>';
